@@ -12,8 +12,6 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 
 import com.google.api.services.drive.DriveScopes;
-import com.google.api.services.drive.model.*;
-import com.google.api.services.drive.Drive;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,31 +19,38 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
-
-/**
- * Created by Goncalo on 4/5/2016.
- */
-public class DriveQuickstart {
-    /** Application name. */
+public class GDrive {
+    /**
+     * Application name.
+     */
     private static final String APPLICATION_NAME =
-            "Drive API Java Quickstart";
+            "GDrive API Java Quickstart";
 
-    /** Directory to store user credentials for this application. */
+    /**
+     * Directory to store user credentials for this application.
+     */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
             System.getProperty("user.home"), ".credentials/drive-java-quickstart.json");
 
-    /** Global instance of the {@link FileDataStoreFactory}. */
+    /**
+     * Global instance of the {@link FileDataStoreFactory}.
+     */
     private static FileDataStoreFactory DATA_STORE_FACTORY;
 
-    /** Global instance of the JSON factory. */
+    /**
+     * Global instance of the JSON factory.
+     */
     private static final JsonFactory JSON_FACTORY =
             JacksonFactory.getDefaultInstance();
 
-    /** Global instance of the HTTP transport. */
+    /**
+     * Global instance of the HTTP transport.
+     */
     private static HttpTransport HTTP_TRANSPORT;
 
-    /** Global instance of the scopes required by this quickstart.
-     *
+    /**
+     * Global instance of the scopes required by this quickstart.
+     * <p>
      * If modifying these scopes, delete your previously saved credentials
      * at ~/.credentials/drive-java-quickstart.json
      */
@@ -64,13 +69,14 @@ public class DriveQuickstart {
 
     /**
      * Creates an authorized Credential object.
+     *
      * @return an authorized Credential object.
      * @throws IOException
      */
     public static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
-                DriveQuickstart.class.getResourceAsStream("/client_secret.json");
+                GDrive.class.getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
@@ -89,13 +95,14 @@ public class DriveQuickstart {
     }
 
     /**
-     * Build and return an authorized Drive client service.
-     * @return an authorized Drive client service
+     * Build and return an authorized GDrive client service.
+     *
+     * @return an authorized GDrive client service
      * @throws IOException
      */
-    public static Drive getDriveService() throws IOException {
+    public static com.google.api.services.drive.Drive getDriveService() throws IOException {
         Credential credential = authorize();
-        return new Drive.Builder(
+        return new com.google.api.services.drive.Drive.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();

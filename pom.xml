@@ -44,7 +44,7 @@
         <app.mainClass>norvidi.CMan</app.mainClass>
 
         <!--Optional parameters to the application, will be embedded in the launcher and can be overriden on the command line-->
-<!--        <app.parameters>&#45;&#45;myOption=myValue &#45;&#45;myOtherOption=myOtherValue</app.parameters>-->
+        <!--        <app.parameters>&#45;&#45;myOption=myValue &#45;&#45;myOtherOption=myOtherValue</app.parameters>-->
 
         <!-- The Application vendor used by javapackager -->
         <app.vendor>Norvidi</app.vendor>
