@@ -19,13 +19,13 @@ class upFile {
             conn.setDoOutput(true);
 
             String postData = "";
-            InputStream imgIs = getClass().getResourceAsStream("/test.jpg");
+            InputStream imgIs = getClass().getResourceAsStream("/norvidi.xlsx");
             byte[] imgData = new byte[imgIs.available()];
             imgIs.read(imgData);
 
             String message1 = "";
             message1 += "-----------------------------4664151417711" + CrLf;
-            message1 += "Content-Disposition: form-data; name=\"uploadedfile\"; filename=\"test.jpg\""
+            message1 += "Content-Disposition: form-data; name=\"uploadedfile\"; filename=\"norvidi.xlsx\""
                     + CrLf;
             message1 += "Content-Type: image/jpeg" + CrLf;
             message1 += CrLf;
@@ -101,6 +101,6 @@ class upFile {
         }
     }
     void down(){
-        
+
     }
 }
