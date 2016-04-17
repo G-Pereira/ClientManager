@@ -25,7 +25,6 @@ public class Main extends Application {
 
         Work reader = new Work();
 
-        TableView<Work> table = new TableView<Work>();
         ObservableList<Work> Works = FXCollections.observableArrayList(reader.readWorksFromExcelFile("C:\\Users\\Goncalo\\Desktop\\norvidi.xlsx", 1));
 
         tbl.setEditable(true);
