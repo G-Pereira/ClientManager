@@ -11,33 +11,23 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
-public class Main extends Application {
-
-    private TableView tbl = new TableView();
-
-    /*private TableView<Work> table = new TableView<Work>();
-    private final ObservableList<Book> data =
-            FXCollections.observableArrayList(
-                    new Work("A", "Z", "a@example.com"),
-                    new Work("B", "X", "b@example.com"),
-                    new Work("C", "W", "c@example.com"),
-                    new Work("D", "Y", "d@example.com"),
-                    new Work("E", "V", "e@example.com")
-            );*/
-
+public class Main  extends Application  {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Integer i = 0;
+
         primaryStage.setTitle("Norvidi Client Manager");
         StackPane sp = new StackPane();
-        sp.getChildren().add(tbl);
 
-        String excelFilePath = "C:\\Users\\Goncalo\\Desktop\\norvidi.xlsx";
-        Book reader = new Book();
-        List<Book> table = reader.readBooksFromExcelFile(excelFilePath, 1);
 
-        tbl.setEditable(true);
+        Work reader = new Work();
+
+        List<Work> booktable = reader.readWorksFromExcelFile("C:\\Users\\Goncalo\\Desktop\\norvidi.xlsx", 1);
+
+        TableView<Work> table = new TableView<Work>();
+        ObservableList<Work> Works = FXCollections.observableArrayList(booktable);
+
+        table.setEditable(true);
 
         TableColumn number = new TableColumn("ORC N");
         TableColumn client = new TableColumn("Cliente");
@@ -48,13 +38,10 @@ public class Main extends Application {
         TableColumn iva = new TableColumn("IVA");
         TableColumn total = new TableColumn("Total");
 
-        tbl.getColumns().addAll(number, client, address, zone, date, price, iva, total);
+        table.getColumns().addAll(number, client, address, zone, date, price, iva, total);
+        table.setItems(Works);
 
-        while (!(table.get(i)+"").contains("null")) {
-            System.out.println(table.get(i));
-            i++;
-        }
-
+        sp.getChildren().add(table);
         Scene scn = new Scene(sp, 750, 500);
         primaryStage.setScene(scn);
         primaryStage.show();
