@@ -1,5 +1,7 @@
 package norvidi;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
@@ -7,7 +9,7 @@ import java.net.URLConnection;
 
 class upFile {
 
-    void httpConn() {
+    void httpConn(String path, String name) {
         String CrLf = "\r\n";
         OutputStream os = null;
         InputStream is = null;
@@ -19,16 +21,14 @@ class upFile {
             conn.setDoOutput(true);
 
             String postData = "";
-            InputStream imgIs = getClass().getResourceAsStream("/norvidi.xlsx");
+            FileInputStream imgIs = new FileInputStream(new File(path));
             byte[] imgData = new byte[imgIs.available()];
             imgIs.read(imgData);
 
             String message1 = "";
             message1 += "-----------------------------4664151417711" + CrLf;
-            message1 += "Content-Disposition: form-data; name=\"uploadedfile\"; filename=\"norvidi.xlsx\""
+            message1 += "Content-Disposition: form-data; name=\"uploadedfile\"; filename=\""+name+".xlsx\""
                     + CrLf;
-            message1 += "Content-Type: image/jpeg" + CrLf;
-            message1 += CrLf;
 
             // the image is sent between the messages in the multipart message.
 

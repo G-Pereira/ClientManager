@@ -4,16 +4,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-class Book {
+class Work {
     private String number;
     private String client;
     private String address;
@@ -23,11 +21,11 @@ class Book {
     private String iva;
     private String total;
 
-    Book() {
+    Work() {
     }
 
     public String toString() {
-        return String.format("%s - %s - %s - %s - %s - %s - %s - %s", number, client, address, zone, date, price, iva, total);
+        return String.format("%s ** %s ** %s ** %s ** %s ** %s ** %s ** %s", number, client, address, zone, date, price, iva, total);
     }
 
     // getters and setters
@@ -36,29 +34,29 @@ class Book {
         switch (cell.getCellType()) {
             case Cell.CELL_TYPE_STRING:
                 return cell.getStringCellValue();
-
             case Cell.CELL_TYPE_BOOLEAN:
                 return cell.getBooleanCellValue();
-
             case Cell.CELL_TYPE_NUMERIC:
+                return cell.getNumericCellValue();
+            case Cell.CELL_TYPE_FORMULA:
                 return cell.getNumericCellValue();
         }
 
         return null;
     }
 
-    List<Book> readBooksFromExcelFile(String excelFilePath) throws IOException {
-        List<Book> listBooks = new ArrayList<>();
+    List<Work> readWorksFromExcelFile(String excelFilePath, Integer Month) throws IOException {
+        List<Work> listWorks = new ArrayList<>();
         FileInputStream inputStream = new FileInputStream(new File(excelFilePath));
 
         Workbook workbook = new XSSFWorkbook(inputStream);
-        Sheet firstSheet = workbook.getSheetAt(0);
+        Sheet firstSheet = workbook.getSheetAt(Month-1);
         Iterator<Row> iterator = firstSheet.iterator();
-
+        Row nextRow = iterator.next();
         while (iterator.hasNext()) {
-            Row nextRow = iterator.next();
+            nextRow = iterator.next();
             Iterator<Cell> cellIterator = nextRow.cellIterator();
-            Book aBook = new Book();
+            Work aWork = new Work();
 
             while (cellIterator.hasNext()) {
                 Cell nextCell = cellIterator.next();
@@ -66,40 +64,41 @@ class Book {
 
                 switch (columnIndex) {
                     case 0:
-                        aBook.setNumber((String) getCellValue(nextCell)+"");
+                        aWork.setNumber(getCellValue(nextCell) + "");
                         break;
                     case 1:
-                        aBook.setClient((String) getCellValue(nextCell)+"");
+                        aWork.setClient(getCellValue(nextCell) + "");
                         break;
                     case 2:
-                        aBook.setAddress((String) getCellValue(nextCell)+"");
+                        aWork.setAddress(getCellValue(nextCell) + "");
                         break;
                     case 3:
-                        aBook.setZone((String) getCellValue(nextCell)+"");
+                        aWork.setZone(getCellValue(nextCell) + "");
                         break;
                     case 4:
-                        aBook.setDate((String) String.valueOf(getCellValue(nextCell))+"");
+                        Date d = nextCell.getDateCellValue();
+                        aWork.setDate(String.valueOf(d));
                         break;
                     case 5:
-                        aBook.setPrice((String) getCellValue(nextCell)+"");
+                        aWork.setPrice(String.valueOf(getCellValue(nextCell)));
                         break;
                     case 6:
-                        aBook.setIva((String) getCellValue(nextCell)+"");
+                        aWork.setIva(String.valueOf(getCellValue(nextCell) + ""));
                         break;
                     case 7:
-                        aBook.setTotal(String.valueOf(getCellValue(nextCell)));
+                        aWork.setTotal(String.valueOf(getCellValue(nextCell)));
                         break;
                 }
 
 
             }
-            listBooks.add(aBook);
+            listWorks.add(aWork);
         }
 
         workbook.close();
         inputStream.close();
 
-        return listBooks;
+        return listWorks;
     }
 
     private void setNumber(String number) {
