@@ -11,7 +11,7 @@ import java.util.List;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-class Work {
+class Workeeee {
     private String number;
     private String client;
     private String address;
@@ -21,7 +21,7 @@ class Work {
     private String iva;
     private String total;
 
-    Work() {
+    Workeeee() {
     }
 
     public String toString() {
@@ -45,8 +45,8 @@ class Work {
         return null;
     }
 
-    List<Work> readWorksFromExcelFile(String excelFilePath, Integer Month) throws IOException {
-        List<Work> listWorks = new ArrayList<>();
+    List<Workeeee> readWorksFromExcelFile(String excelFilePath, Integer Month) throws IOException {
+        List<Workeeee> listWorkeeees = new ArrayList<>();
         FileInputStream inputStream = new FileInputStream(new File(excelFilePath));
 
         Workbook workbook = new XSSFWorkbook(inputStream);
@@ -56,7 +56,7 @@ class Work {
         while (iterator.hasNext()) {
             nextRow = iterator.next();
             Iterator<Cell> cellIterator = nextRow.cellIterator();
-            Work aWork = new Work();
+            Workeeee aWorkeeee = new Workeeee();
 
             while (cellIterator.hasNext()) {
                 Cell nextCell = cellIterator.next();
@@ -64,41 +64,41 @@ class Work {
 
                 switch (columnIndex) {
                     case 0:
-                        aWork.setNumber(getCellValue(nextCell) + "");
+                        aWorkeeee.setNumber(getCellValue(nextCell) + "");
                         break;
                     case 1:
-                        aWork.setClient(getCellValue(nextCell) + "");
+                        aWorkeeee.setClient(getCellValue(nextCell) + "");
                         break;
                     case 2:
-                        aWork.setAddress(getCellValue(nextCell) + "");
+                        aWorkeeee.setAddress(getCellValue(nextCell) + "");
                         break;
                     case 3:
-                        aWork.setZone(getCellValue(nextCell) + "");
+                        aWorkeeee.setZone(getCellValue(nextCell) + "");
                         break;
                     case 4:
                         Date d = nextCell.getDateCellValue();
-                        aWork.setDate(String.valueOf(d));
+                        aWorkeeee.setDate(String.valueOf(d));
                         break;
                     case 5:
-                        aWork.setPrice(String.valueOf(getCellValue(nextCell)));
+                        aWorkeeee.setPrice(String.valueOf(getCellValue(nextCell)));
                         break;
                     case 6:
-                        aWork.setIva(String.valueOf(getCellValue(nextCell) + ""));
+                        aWorkeeee.setIva(String.valueOf(getCellValue(nextCell) + ""));
                         break;
                     case 7:
-                        aWork.setTotal(String.valueOf(getCellValue(nextCell)));
+                        aWorkeeee.setTotal(String.valueOf(getCellValue(nextCell)));
                         break;
                 }
 
 
             }
-            listWorks.add(aWork);
+            listWorkeeees.add(aWorkeeee);
         }
 
         workbook.close();
         inputStream.close();
 
-        return listWorks;
+        return listWorkeeees;
     }
 
     private void setNumber(String number) {
