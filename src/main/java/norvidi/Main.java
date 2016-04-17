@@ -9,25 +9,26 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
-public class Main  extends Application  {
+public class Main extends Application {
+
+    private TableView<Work> tbl = new TableView<Work>();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+
         primaryStage.setTitle("Norvidi Client Manager");
         StackPane sp = new StackPane();
 
-
         Work reader = new Work();
 
-        List<Work> booktable = reader.readWorksFromExcelFile("C:\\Users\\Goncalo\\Desktop\\norvidi.xlsx", 1);
-
         TableView<Work> table = new TableView<Work>();
-        ObservableList<Work> Works = FXCollections.observableArrayList(booktable);
+        ObservableList<Work> Works = FXCollections.observableArrayList(reader.readWorksFromExcelFile("C:\\Users\\Goncalo\\Desktop\\norvidi.xlsx", 1));
 
-        table.setEditable(true);
+        tbl.setEditable(true);
 
         TableColumn number = new TableColumn("ORC N");
         TableColumn client = new TableColumn("Cliente");
@@ -38,10 +39,10 @@ public class Main  extends Application  {
         TableColumn iva = new TableColumn("IVA");
         TableColumn total = new TableColumn("Total");
 
-        table.getColumns().addAll(number, client, address, zone, date, price, iva, total);
-        table.setItems(Works);
+        tbl.getColumns().addAll(number, client, address, zone, date, price, iva, total);
+        tbl.setItems(Works);
 
-        sp.getChildren().add(table);
+        sp.getChildren().add(tbl);
         Scene scn = new Scene(sp, 750, 500);
         primaryStage.setScene(scn);
         primaryStage.show();
